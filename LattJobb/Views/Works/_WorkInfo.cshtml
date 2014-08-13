@@ -1,0 +1,20 @@
+﻿@model Gottknark.ViewModels.WorkViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <p><img width="350" height="350" src="@Model.Work.Image" /></p>
+                </div>
+                <div class="col-md-8">
+                    <h1>@Html.ActionLink(@Model.Work.User.UserName, "ShowProfile", "Profile", new { id = @Model.Work.UserId }, null)</h1>
+                    <h2>@Html.DisplayFor(model => model.Work.Title)</h2>
+                    <h3>Max pris: @Html.DisplayFor(model => model.Work.Price)Kr</h3>
+                    <pre>@Html.DisplayFor(model => model.Work.About)</pre>
+                    <b>Taggar: @Html.DisplayFor(model => model.Work.Tags)</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

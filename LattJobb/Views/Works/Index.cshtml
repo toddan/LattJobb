@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<Gottknark.Models.Work>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Arbeten";
+}
+
+<div class="col-md-12">
+    <p>
+        @using (Html.BeginForm("Index", "Works", FormMethod.Post, new { @class = "form" }))
+        {
+            @Html.TextBox("tag")
+            <input type="submit" value="sök" />
+        }
+    </p>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().User)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Title, "Details", "Works", new { id = item.WorkId }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.UserName, "ShowProfile", "Profile", new { id = item.User.UserId }, null)
+                </td>
+            </tr>
+        }
+    </table>
+    Sida @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) av @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

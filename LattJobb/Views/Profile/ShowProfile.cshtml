@@ -1,0 +1,9 @@
+﻿@model Gottknark.ViewModels.ProfileViewModel
+
+@{
+    ViewBag.Title = "ShowProfile";
+}
+
+@Html.Partial("_ProfileInfo", Model)
+@Html.Partial("_RatingForm",Model)
+@Html.Partial("_UserRatings",Model)

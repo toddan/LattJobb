@@ -1,0 +1,19 @@
+﻿@model Gottknark.ViewModels.WorkViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="col-md-12">
+    @Html.Partial("_WorkInfo", Model)
+
+    @if (Model.Work.Closed == false)
+    {
+        @Html.Partial("_WorkBiddings", Model)
+        @Html.Partial("_WorkComments", Model)
+    }
+    else
+    {
+        <hr />
+        <h1>Denna annons är stängd!</h1>
+    }
+</div>

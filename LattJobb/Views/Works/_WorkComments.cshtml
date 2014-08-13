@@ -1,0 +1,47 @@
+﻿@model Gottknark.ViewModels.WorkViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lägg till kommentar</h3>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("AddComment", "Works", FormMethod.Post, new { @class = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.WorkComment.WorkId)
+                        @Html.LabelFor(model => model.WorkComment.Comment)
+                        @Html.TextAreaFor(model => model.WorkComment.Comment, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.WorkComment.Comment)
+                    </div>
+                    <p>
+                        <input type="submit" value="Create" />
+                    </p>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @foreach (var comment in Model.Work.Comments)
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Html.ActionLink(@comment.User.UserName, "ShowProfile", "Profile", new { id = @comment.User.UserId }, null)</div>
+                <div class="panel-body">
+                    <pre>@comment.Comment</pre>
+                </div>
+            </div>
+        </div>
+    }
+    @if (WebSecurity.CurrentUserId == Model.Work.UserId)
+    {
+        using (Html.BeginForm("CloseWork", "Works", FormMethod.Post, new { @class = "form" }))
+        {
+            @Html.Hidden("id", @Model.Work.WorkId)
+            <input type="submit" value="Stäng annons" />
+        }
+    }
+</div>

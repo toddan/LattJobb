@@ -1,0 +1,19 @@
+﻿@model Gottknark.ViewModels.ProfileViewModel
+
+<div class="row">
+
+    @foreach (var rating in Model.UserProfile.UserRatings)
+    {
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @Html.ActionLink(@rating.Commenter.UserName, "ShowProfile", "Profile", new { id = @rating.Commenter.UserId }, null)
+                </div>
+                <div class="panel-body">
+                    <p><b>Betyg: @rating.Rating / 5</b></p>
+                    <pre>@rating.Comment</pre>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,53 @@
+﻿@model Gottknark.ViewModels.WorkViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Bud givningar</h3>
+            </div>
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Offer.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Offer.UserProfile.UserName)
+                    </td>
+                </tr>
+                @foreach (var offer in Model.Work.Offers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => offer.Price)
+                        </td>
+                        <td>
+                            @Html.ActionLink(@offer.UserProfile.UserName, "ShowProfile", "Profile", new { id = @offer.UserProfile.UserId }, null)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lägg bud</h3>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("MakeOffer", "Works", FormMethod.Post, new { @class = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.Offer.WorkId)
+                        @Html.LabelFor(model => model.Offer.Price)
+                        @Html.TextBoxFor(model => model.Offer.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Offer.Price)
+                    </div>
+                    <p>
+                        <input type="submit" value="Create" />
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

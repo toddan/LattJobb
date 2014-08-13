@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <!-- Static navbar -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">LättJobb</a>
+                </div>
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav">
+                        @if (WebSecurity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Anonnser", "Index", "Works")</li>
+                            if (Roles.IsUserInRole("Employer"))
+                            {
+                                <li>@Html.ActionLink("Lägg in jobb annons", "Create", "Works")</li>
+                                <li>@Html.ActionLink("Sök arbetare", "Index", "SearchProfile")</li>
+                            }
+                        }
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (WebSecurity.IsAuthenticated)
+                        {
+
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                            }
+
+                            <li>@Html.ActionLink(WebSecurity.CurrentUserName, "Index", "Profile")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Logga in", "Login", "account")</li>
+                            <li>@Html.ActionLink("Registrera dig", "Register", "account")</li>
+                        }
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </div>
+    </div>
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="container">
+        <div class="row">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- /container -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

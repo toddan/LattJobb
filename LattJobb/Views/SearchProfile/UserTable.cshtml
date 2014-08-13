@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Gottknark.Models.UserProfile>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Profile.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Profile.Phone)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.UserName, "ShowProfile", "Profile", new { id = item.UserId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.Phone)
+            </td>
+        </tr>
+    }
+</table>

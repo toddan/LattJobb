@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "sök arbetare";
+}
+
+<div class="col-md-12">
+    <p>
+        
+        @Html.TextBox("tag") 
+        <input type="button" value="sök" id="search" />
+        (Söker både på taggar och användarnamn!)
+    </p>
+    <div class="usertable"></div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.usertable').load("@Url.Action("UserTable","searchprofile")");
+            $('#search').click(function () {
+
+                var data = {
+                    tag: $('#tag').val()
+                };
+
+                $.ajax({
+                    url: 'searchprofile/UserTable/',
+                    type: 'POST',
+                    dataType: 'html',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        $('.usertable').empty();
+                        $('#search').empty();
+                        $('.usertable').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+}

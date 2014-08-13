@@ -1,0 +1,44 @@
+﻿@model Gottknark.ViewModels.ProfileViewModel
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">@Model.UserProfile.UserName</div>
+            <div class="panel-body">
+                <h2>@TempData["message"]</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><img width="250" height="250" src="@Model.UserProfile.Profile.Image" /></p>
+                    </div>
+                    <div class="col-md-5">
+                        <ul>
+                            <li><b>Namn: </b>@Html.DisplayFor(model => model.UserProfile.Profile.Name)</li>
+                            <li><b>EfterNamn: </b>@Html.DisplayFor(model => model.UserProfile.Profile.Surname)</li>
+                            <li><b>Telefon: </b>@Html.DisplayFor(model => model.UserProfile.Profile.Phone)</li>
+                            <li><b>Email: </b>@Html.DisplayFor(model => model.UserProfile.Profile.Email)</li>
+                        </ul>
+                        <hr />
+                        @if (WebSecurity.CurrentUserId == Model.UserProfile.UserId)
+                        {
+                            <ul>
+                                <li>@Html.ActionLink("Inställningar", "Edit")</li>
+                                <li>@Html.ActionLink("Ändra lösenord", "manage", "account")</li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p><b>Om: </b></p>
+                        <pre>@Html.DisplayFor(model => model.UserProfile.Profile.Info)</pre>
+                        @if (Roles.GetUsersInRole("Employee").Contains(Model.UserProfile.UserName))
+                        {
+                            <p><b>Taggar: @Html.DisplayFor(model => model.UserProfile.Profile.Tags)</b></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
