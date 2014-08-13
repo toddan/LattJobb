@@ -1,4 +1,5 @@
 ﻿using Gottknark.DAL;
+using Gottknark.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -25,7 +26,7 @@ namespace Gottknark
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            Database.SetInitializer<GottKnarkContext>(new MigrateDatabaseToLatestVersion<GottKnarkContext, Configuration>());
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -42,7 +43,7 @@ namespace Gottknark
                     context.UserProfiles.Find(1);
 
                 if (!WebSecurity.Initialized)
-                    WebSecurity.InitializeDatabaseConnection("defaultconnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("smarterasp", "UserProfile", "UserId", "UserName", autoCreateTables: true);
             }
         }
     }

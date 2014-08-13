@@ -13,6 +13,7 @@ namespace Gottknark.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Gottknark.DAL.GottKnarkContext context)
@@ -38,7 +39,7 @@ namespace Gottknark.Migrations
         private void SeedMemberShip()
         {
             WebSecurity.InitializeDatabaseConnection(
-                "DefaultConnection",
+                "smarterasp",
                 "UserProfile",
                 "UserId",
                 "UserName", autoCreateTables: true);

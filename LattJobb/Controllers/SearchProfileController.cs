@@ -29,7 +29,7 @@ namespace Gottknark.Controllers
         public ActionResult UserTable()
         {
             var users = Roles.GetUsersInRole("Employee");
-            var profiles = profileRepository.GetWhere(u => users.Contains(u.UserName));
+            var profiles = profileRepository.GetWhere(u => users.Contains(u.UserName) && u.Profile != null);
 
             return PartialView(profiles);
         }
@@ -40,7 +40,7 @@ namespace Gottknark.Controllers
             if(string.IsNullOrEmpty(tag))
             {
                 var _users = Roles.GetUsersInRole("Employee");
-                var _profiles = profileRepository.GetWhere(u => _users.Contains(u.UserName));
+                var _profiles = profileRepository.GetWhere(u => _users.Contains(u.UserName) && u.Profile != null);
                 return PartialView(_profiles);
             }
 
@@ -48,7 +48,8 @@ namespace Gottknark.Controllers
             var profiles = profileRepository
                 .GetWhere(u => users.Contains(u.UserName) 
                     && u.Profile.Tags.Contains(tag)
-                    || u.UserName.Contains(tag)).ToList();
+                    || u.UserName.Contains(tag)
+                    && u.Profile != null).ToList();
 
             return PartialView(profiles);
         }

@@ -10,7 +10,7 @@ namespace Gottknark.DAL
 {
     public class GottKnarkContext : DbContext
     {
-        public GottKnarkContext() : base("defaultconnection") { }
+        public GottKnarkContext() : base("smarterasp") { }
         public DbSet<Work> Works { get; set; }
         public DbSet<WorkComment> Comments { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }

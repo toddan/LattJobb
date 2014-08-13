@@ -30,7 +30,7 @@ namespace Gottknark.Controllers
 
         public ActionResult Index(int? page)
         {
-            int pagesize = 0;
+            int pagesize = 1;
             int pagenumber;
 
             var works = workRepository.GetAll().Reverse();
@@ -49,15 +49,12 @@ namespace Gottknark.Controllers
         [HttpPost]
         public ActionResult Index(string tag, int? page)
         {
-            int pagesize;
+            int pagesize = 10;
             int pagenumber = (page ?? 1);
 
             var user = profileRepository.GetByID(WebSecurity.CurrentUserId);
-            if (user.Profile.NumerOfResults == 0)
-            {
-                pagesize = 10;
-            }
-            else
+
+            if(user.Profile != null)
             {
                 pagesize = user.Profile.NumerOfResults;
             }

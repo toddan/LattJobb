@@ -77,7 +77,7 @@ namespace Gottknark.Controllers
         public ActionResult ShowProfile(int id)
         {
             var userprofile = profileRepository.GetByID(id);
-            if (userprofile == null)
+            if (userprofile.Profile == null)
             {
                 return HttpNotFound();
             }
@@ -87,6 +87,8 @@ namespace Gottknark.Controllers
                 UserProfile = userprofile,
                 UserRating = new UserRating() { UserId = userprofile.UserId}
             };
+
+            TempData["message"] = "test";
 
             profileviewmodel.UserProfile.UserRatings.Reverse();
 
